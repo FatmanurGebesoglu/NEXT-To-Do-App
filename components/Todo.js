@@ -6,9 +6,12 @@ import {doc,deleteDoc } from 'firebase/firestore'
 import {db} from "../firebase";
 import {TodoContext} from "../contexts/TodoContext"
 import { useContext } from "react";
+import { useRouter } from "next/router";
+
 
 export default function Todo({todo}) {
 
+    const router = useRouter();
     const {id, baslik,aciklama,tarih} = todo;
 
     const {showAlert, setTodo} = useContext(TodoContext);
@@ -24,6 +27,10 @@ export default function Todo({todo}) {
 
     }
 
+    const handleMore=(id,e)=>{
+        router.push(`/todos/${id}`);
+    }
+
   return (
     <ListItem onClick={()=> setTodo({id,baslik, aciklama,tarih})}  sx={{mt:3, boxShadow:3}} style={{backgroundColor:'#FAFAFA', color: 'black'}}
       secondaryAction={
@@ -31,7 +38,7 @@ export default function Todo({todo}) {
             <IconButton onClick={(e)=>handleDelete(id, e)}>
                 <Delete />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={(e)=> handleMore(id,e)}>
                 <MoreVert />
             </IconButton>
         </>
