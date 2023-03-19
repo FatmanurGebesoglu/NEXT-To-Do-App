@@ -1,12 +1,14 @@
 
 import {Button, TextField, Typography} from '@mui/material'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { db } from '@/firebase'
-import { AlternateEmail } from '@mui/icons-material'
+import {TodoContext} from "../contexts/TodoContext"
 
 
 export default function TodoForm() {
+
+    const {showAlert} = useContext(TodoContext);
 
     const [todo,setTodo]= useState({
         baslik:'',
@@ -17,6 +19,7 @@ export default function TodoForm() {
         e.preventDefault();
         
         if(todo.baslik == '' || todo.aciklama==''){
+            showAlert("error","Başlık ya da açıklama boş bırakılamaz")
             return;
         }
 
@@ -24,7 +27,9 @@ export default function TodoForm() {
         const docRef= await addDoc(ref, {...todo, tarih: serverTimestamp()})
         console.log(docRef.id);
         setTodo({baslik:'',aciklama:''})
-        alert(`${docRef.id} id'ye sahip todo eklendi`)
+        //alert(`${docRef.id} id'ye sahip todo eklendi`)
+
+        showAlert("success",`${docRef.id} id'ye sahip todo eklendi`);
 
     }
 
