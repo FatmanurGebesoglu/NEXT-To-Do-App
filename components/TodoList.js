@@ -2,7 +2,7 @@ import {collection, onSnapshot, orderBy, query} from "firebase/firestore"
 import { db } from "@/firebase"
 import { useEffect, useState } from "react"
 import Todo from "./Todo"
-
+import { Typography } from "@mui/material"
 
 export default function TodoList() {
 
@@ -24,6 +24,13 @@ export default function TodoList() {
 
   return (
     <div>
+
+        {todos.length === 0 ? (
+            <Typography color="deeppink" variant="h5" sx={{mt:5, fontWeight:'bold'}}>Henüz Todo Eklenmedi...</Typography> 
+        ):(
+            <Typography  color="deeppink" variant="h3" sx={{mt:5, fontWeight:'bold'}}>Todo Listesi</Typography>
+        )}
+        
 
     {todos.map(todo=>
      <Todo key={todo.id} todo={todo} />
