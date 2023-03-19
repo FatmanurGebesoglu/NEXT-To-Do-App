@@ -18,6 +18,11 @@ export default function Home() {
     setOpen(true);
   }
 
+  const [todo, setTodo] = useState({
+    baslik: '',
+    aciklama: ''
+  })
+
   const handleClose = (even, reason) => {
     if (reason === 'clickway') {
       return;
@@ -28,7 +33,7 @@ export default function Home() {
 
 
   return (
-    <TodoContext.Provider value={{ showAlert }}>
+    <TodoContext.Provider value={{ showAlert, todo, setTodo }}>
       <Container maxWidth="md">
         <Head>
           <title>TO DO APP</title>
@@ -38,10 +43,10 @@ export default function Home() {
         </Head>
 
         <TodoForm />
-        <Snackbar anchorOrigin={{vertical: 'top', horizontal:'center'}} open={open} autoHideDuration={4000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity={alertType} sx={{width:'100%'}}> 
-              {alertMessage}
-            </Alert>
+        <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={4000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity={alertType} sx={{ width: '100%' }}>
+            {alertMessage}
+          </Alert>
         </Snackbar>
         <TodoList />
 
