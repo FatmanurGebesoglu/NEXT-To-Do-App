@@ -4,10 +4,11 @@ import { useContext, useRef, useEffect } from 'react'
 import { addDoc, collection, serverTimestamp, updateDoc, doc } from 'firebase/firestore'
 import { db } from '@/firebase'
 import { TodoContext } from "../contexts/TodoContext"
-
+import { AuthContext } from '../contexts/AuthContext'
 
 export default function TodoForm() {
 
+    const {currentUser}=useContext(AuthContext);
     const { showAlert, todo, setTodo } = useContext(TodoContext);
 
     const inputRef = useRef();
